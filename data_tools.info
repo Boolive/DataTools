@@ -1,0 +1,8 @@
+{
+    "proto": "/vendor/boolive/basic/controller",
+    "order": 2,
+    "logic": true,
+    "properties": {
+        "title": "DataTools"
+    }
+}

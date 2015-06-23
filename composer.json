@@ -1,5 +1,5 @@
 {
-    "name": "boolive/data-tools",
+    "name": "boolive/data_tools",
     "type": "module",
     "description": "Console tools for work with data model",
     "keywords": ["boolive","package","console","data"],
@@ -13,7 +13,8 @@
     ],
     "require": {
         "php": ">=5.4.0",
-        "boolive/core": "dev-master"
+        "boolive/core": "dev-master",
+        "boolive/basic": "dev-master"
     },
     "autoload": {
         "psr-4": {
