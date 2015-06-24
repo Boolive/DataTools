@@ -25,7 +25,7 @@ class data_tools extends controller
                 'method' => Rule::string()->eq('CLI')
             ]),
             'ARG' => Rule::arrays([
-                1 => Rule::eq('entity')->required(),
+                1 => Rule::eq('data_tools')->required(),
                 2 => Rule::string(),
                 3 => Rule::string(),
                 4 => Rule::string(),
