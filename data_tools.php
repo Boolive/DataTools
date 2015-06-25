@@ -40,7 +40,6 @@ class data_tools extends controller
 
         $uri = '';
 
-//        C::writeln(Trace::format($_SERVER, false));
 //        $s = C::read();
 //        C::writeln(mb_detect_encoding($s,['utf-8','cp866']));
         do{
@@ -73,10 +72,11 @@ class data_tools extends controller
                         C::writeln(C::style($obj->name(), C::COLOR_BLUE));
                     }
                 }else
-                if ($cmd_count > 1 && $commands[0] == 'find') {
-                    $cond = empty($commands[1]) ? '' : trim($commands[1], '/');
+                if (preg_match('/^\s*select(\(|=)/ui',$commands[0])) {
+                    $cond = Data::normalizeCond($commands[0], false);
+                    if (!isset($cond['from'])) $cond['from'] = $uri;
                     $result = Data::find($cond);
-                    C::write(C::style(Trace::format($result, false)));
+                    C::writeln(C::style(Trace::format($result, false)));
                 }else
                 if ($commands[0] == 'color'){
                     if (!empty($commands[1])){
