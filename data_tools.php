@@ -7,6 +7,7 @@
 namespace boolive\data_tools;
 
 use boolive\basic\controller\controller;
+use boolive\core\data\Buffer;
 use boolive\core\data\Data;
 use boolive\core\data\Entity;
 use boolive\core\develop\Trace;
@@ -92,7 +93,11 @@ class data_tools extends controller
                         if ($cmd_count > 2){
                             if ($commands[2] === "null"){
                                 $commands[2] = null;
-                            }else{
+                            }else
+                            if ($commands[2] === "false"){
+                                $commands[2] = false;
+                            }
+                            else{
                                 $commands[2] = trim(trim($commands[2],'"'));
                             }
                             $obj->{$attr}($commands[2]);
@@ -116,9 +121,16 @@ class data_tools extends controller
                     if (isset($signs['-h'])) $obj->is_hidden(true);
                     if (isset($signs['-l'])) $obj->is_link(true);
                     if (isset($signs['-r'])) $obj->is_relative(true);
-                    if (!$obj->is_link()){
-                        $obj->complete();
-                    }
+
+                    Data::write($obj);
+                    C::writeln(Trace::format($obj, false));
+                }else
+                if ($commands[0] == 'complete'){
+                    $obj = Data::read($uri);
+                    $signs = array_flip($commands);
+                    $only_mandatory = !isset($signs['-all']) && !isset($signs['-not-mandatory']);
+                    $only_property = !isset($signs['-all']) && !isset($signs['-not-property']);
+                    $obj->complete($only_mandatory, $only_property);
                     Data::write($obj);
                     C::writeln(Trace::format($obj, false));
                 }
@@ -133,6 +145,7 @@ class data_tools extends controller
             catch (\Exception $e){
                 C::writeln(C::style((string)$e, C::COLOR_RED));
             }
+            Buffer::clear();
         }while($commands[0] !== 'exit');
         C::writeln("\nby!");
 
