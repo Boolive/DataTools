@@ -121,7 +121,7 @@ class data_tools extends controller
                     if (isset($signs['-h'])) $obj->is_hidden(true);
                     if (isset($signs['-l'])) $obj->is_link(true);
                     if (isset($signs['-r'])) $obj->is_relative(true);
-
+                    $obj->complete();
                     Data::write($obj);
                     C::writeln(Trace::format($obj, false));
                 }else
